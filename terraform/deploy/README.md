@@ -14,8 +14,8 @@ ___
   - _cloud_id  = "***Specify Cloud ID***"_
   - _folder_id = "***Specify Folder ID***"_
 - в файле **variables.tf** прописать свой приватный и публичный ключ:
-  - _private_key = "~/.ssh/id_*"
-  - _pub_key     = "~/.ssh/id_*.pub"
+  - _private_key = "~/.ssh/id_**"
+  - _pub_key     = "~/.ssh/id_**.pub"
 - в файле **gitlab-token.yml** прописать регистрационный токен:
   - _gitlab_token: "Specify GitLab runner registration token"_
 - выполнить _terraform init_
