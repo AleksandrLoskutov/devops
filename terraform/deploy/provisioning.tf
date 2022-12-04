@@ -99,5 +99,24 @@ resource "null_resource" "k8s-network-init" {
       "curl https://projectcalico.docs.tigera.io/manifests/calico.yaml -O",
       "kubectl apply -f calico.yaml"
     ]
+  }
 }
+
+resource "local_file" "ansible_inventory" {
+  content = templatefile("inventory.tpl",
+    {
+      server_ip = yandex_compute_instance.srv01.network_interface.0.nat_ip_address
+      master_node_ip = yandex_compute_instance.k8s-master01.network_interface.0.nat_ip_address
+      worker_node_ip = yandex_compute_instance.k8s-worker01.network_interface.0.nat_ip_address
+    }
+  )
+  filename = "inventory"
+}
+
+resource "null_resource" "Ansible" {
+  depends_on = [null_resource.k8s-network-init, yandex_compute_instance.srv01]
+
+  provisioner "local-exec" {
+    command = "./provisioning.sh  ${yandex_compute_instance.k8s-master01.network_interface.0.nat_ip_address} ${yandex_compute_instance.k8s-worker01.network_interface.0.nat_ip_address} ${yandex_compute_instance.srv01.network_interface.0.nat_ip_address}"
+  }
 }
