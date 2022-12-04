@@ -25,7 +25,7 @@ ___
 - терминал
 - ![k8s_terraform_deploy](./images/k8s_deploy_term.PNG)
 - Яндекс Облако
-- ![yandex_result](./images/yandex_result.PNG)
+- ![k8s_cloud_deploy](./images/k8s_deploy_cloud.PNG)
 - веб браузер
 - ![web_result](./images/web_result.PNG)
 - управляющая нода
