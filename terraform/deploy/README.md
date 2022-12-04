@@ -4,8 +4,9 @@ ___
 Требования:
 - Аккаунт в Яндекс Облаке
 - Аккаунт в gitlab.com
-- Установленный Terraform
-- Установленный Ansible
+- Создать на gitlab.com проект **final_sprint**
+- Установить Terraform
+- Установить Ansible
 ___
 Как развернуть:
 - загрузить содержимое из удаленного репозитория
@@ -17,7 +18,7 @@ ___
 - в файле **variables.tf** прописать свой приватный и публичный ключ:
   - _private_key = "~/.ssh/id_*"
   - _pub_key     = "~/.ssh/id_*.pub"
-- в файле **gitlab-token.yml** прописать регистрационный токен:
+- в файле **gitlab-token.yml** прописать регистрационный токен из созданного проекта:
   - _gitlab_token: "***Specify GitLab runner registration token***"_
 - сделать файл **provisioning.sh** исполняемым
 - выполнить _terraform init_
