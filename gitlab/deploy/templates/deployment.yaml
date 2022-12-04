@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sf-test-deployment
+spec:
+  selector:
+    matchLabels:
+      app: sf-test
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sf-test
+    spec:
+      containers:
+        - name: "app"
+          image: "registry.gitlab.com/<Указать логин аккаунта GitLab>/final_sprint:latest"
+          command: ["sh", "-c", "sleep 10 && python manage.py migrate && python manage.py runserver 0.0.0.0:3003"]
+          env:
+            - name: DB_HOST
+              value: localhost
+            - name: DB_NAME
+              value: tutorial-dev
+            - name: DB_USER
+              value: USER
+            - name: DB_PASS
+              value: password
+          ports:
+            - containerPort: 3003
+
+        - name: "db"
+          image: "postgres:13-alpine"
+          env:
+            - name: POSTGRES_DB
+              value: tutorial-dev
+            - name: POSTGRES_USER
+              value: USER
+            - name: POSTGRES_PASSWORD
+              value: password
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: "db-pv"
+              mountPath: /var/lib/postgresql/data
+
+      volumes:
+        - name: "db-pv"
+          persistentVolumeClaim:
+            claimName: "pvc"
