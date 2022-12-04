@@ -1,0 +1,106 @@
+---
+- name: "Getting Kubernetes config"
+  hosts: master_node
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  gather_facts: no
+
+  tasks:
+  - shell:
+      cmd: cat /home/ubuntu/.kube/config
+    register: k8s_config
+
+  - set_fact:
+      k8s_config: "{{ k8s_config.stdout }}"
+      cacheable: yes
+
+- name: "Applying Kubernetes config"
+  hosts: worker_node
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  gather_facts: no
+
+  tasks:
+  - file:
+      dest: /home/ubuntu/.kube/
+      state: directory
+      owner: ubuntu
+      group: ubuntu
+
+  - shell:
+      cmd: echo "{{ hostvars['master_node']['k8s_config'] }}" > /home/ubuntu/.kube/config
+
+  - file:
+      dest: /home/ubuntu/.kube/config
+      owner: ubuntu
+      group: ubuntu
+      mode: "600"
+
+- name: "Seting up GitLab runner"
+  hosts: server
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  vars_files: gitlab-token.yml
+
+  tasks:
+  - apt:
+      upgrade: "yes"
+      update_cache: yes
+    retries: 10
+    delay: 10
+    register: result
+    until: result is succeeded
+
+  - file:
+      dest: /home/ubuntu/.kube/
+      state: directory
+      owner: ubuntu
+      group: ubuntu
+
+  - shell:
+      cmd: echo "{{ hostvars['master_node']['k8s_config'] }}" > /home/ubuntu/.kube/config
+
+  - file:
+      dest: /home/ubuntu/.kube/config
+      owner: ubuntu
+      group: ubuntu
+      mode: "600"
+
+  - get_url:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      dest: /usr/share/keyrings/docker-archive-keyring.asc
+
+  - apt_repository:
+      repo: deb [signed-by=/usr/share/keyrings/docker-archive-keyring.asc] https://download.docker.com/linux/ubuntu jammy stable
+      filename: docker
+
+  - get_url:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+
+  - apt_repository:
+      repo: deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
+      filename: kubernetes
+
+  - apt:
+      pkg:
+      - docker-ce
+      - kubectl
+
+  - shell:
+      cmd: docker run -d --rm --name gitlab-runner -v /srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner:latest register --non-interactive --url "https://gitlab.com/" --registration-token "{{ gitlab_token  }}" --executor "docker" --docker-image docker:latest --description "srv-runner"
+
+  - pause:
+      seconds: 10
+
+  - replace:
+      path: /srv/gitlab-runner/config/config.toml
+      regexp: 'volumes = \["/cache"\]'
+      replace: 'volumes = ["/cache", "/srv/gitlab-runner/config:/etc/gitlab-runner", "/var/run/docker.sock:/var/run/docker.sock", "/home/ubuntu/.kube:/root/.kube"]'
+
+  - shell:
+      cmd: docker run -d --name gitlab-runner --restart always -v /srv/gitlab-runner/config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock  gitlab/gitlab-runner:latest
