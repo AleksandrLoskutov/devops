@@ -17,3 +17,5 @@ ___
 - ![k8s_app_deploy](./images/k8s_app_deploy.PNG)
 - Доступ через веб (ip-адрес worker-ноды:30003)
 - ![k8s_app_web](./images/k8s_app_web.PNG)
+___
+- Проект на gitlab - https://gitlab.com/alexlosk79/final_sprint
