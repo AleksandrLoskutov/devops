@@ -13,7 +13,7 @@ variable "ssh_credentials" {
   })
   default     = {
     user        = "ubuntu"
-    private_key = "~/.ssh/id_***"
-    pub_key     = "~/.ssh/id_***.pub"
+    private_key = "~/.ssh/id_*"
+    pub_key     = "~/.ssh/id_*.pub"
   }
 }
