@@ -22,11 +22,11 @@ ___
 - выполнить _terraform apply_
 ___
 **Результат развертывания**
-- терминал
+- Терминал
 - ![k8s_terraform_deploy](./images/k8s_deploy_term.PNG)
 - Яндекс Облако
 - ![k8s_cloud_deploy](./images/k8s_deploy_cloud.PNG)
-- веб браузер
-- ![web_result](./images/web_result.PNG)
-- управляющая нода
-- ![manager_node](./images/manager_node.PNG)
+- Мастер-нода
+- ![k8s_term_master](./images/k8s_term_master.PNG)
+- GitLab runner
+- ![gitlab_runner](./images/gitlab_runner.PNG)
