@@ -23,7 +23,7 @@ ___
 ___
 **Результат развертывания**
 - терминал
-- ![k8s_terraform_deploy](./images/![image](k8s_deploy_term.PNG)
+- ![k8s_terraform_deploy](./images/k8s_deploy_term.PNG)
 - Яндекс Облако
 - ![yandex_result](./images/yandex_result.PNG)
 - веб браузер
