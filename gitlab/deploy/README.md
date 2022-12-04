@@ -11,11 +11,9 @@ ___
 - вручную запустить исполнение пайплайна CI/CD, ввести при запуске логин и пароль вашей учётной записи gitlab.com
 ___
 **Результат развертывания**
+- Результат выполения пайплайна
+- ![gitlab_pipeline](./images/gitlab_pipeline.PNG)
 - Терминал
-- ![k8s_terraform_deploy](./images/k8s_deploy_term.PNG)
-- Яндекс Облако
-- ![k8s_cloud_deploy](./images/k8s_deploy_cloud.PNG)
-- Мастер-нода
-- ![k8s_term_master](./images/k8s_term_master.PNG)
-- GitLab runner
-- ![gitlab_runner](./images/gitlab_runner.PNG)
+- ![k8s_app_deploy](./images/k8s_app_deploy.PNG)
+- Доступ через веб (ip-адрес worker-ноды:30003)
+- ![k8s_app_web](./images/k8s_app_web.PNG)
