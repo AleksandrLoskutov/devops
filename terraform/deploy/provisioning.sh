@@ -7,8 +7,8 @@ worker_ip=$3
 while : ; do
 ssh -q -o "StrictHostKeyChecking=no" -o "ConnectTimeout=10" ubuntu@$master_ip exit && ssh -q -o "StrictHostKeyChecking=no" -o "ConnectTimeout=10" ubuntu@$worker_ip exit && ssh -q -o "StrictHostKeyChecking=no" -o "ConnectTimeout=10" ubuntu@$server_ip exit
 [ $? -eq 0 ]&& break
-echo "Waiting for nodes initialization..."
+echo "Waiting for instances initialization..."
 done
 
-echo "CONNECTING TO NODES FOR PROVISIONING..."
+echo "CONNECTING TO INSTANCES FOR PROVISIONING..."
 ansible-playbook -i inventory playbook.yml
