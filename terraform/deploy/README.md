@@ -18,6 +18,7 @@ ___
   - _pub_key     = "~/.ssh/id_*.pub"
 - в файле **gitlab-token.yml** прописать регистрационный токен:
   - _gitlab_token: "***Specify GitLab runner registration token***"_
+- сделать файл **provisioning.sh** исполняемым
 - выполнить _terraform init_
 - выполнить _terraform apply_
 ___
