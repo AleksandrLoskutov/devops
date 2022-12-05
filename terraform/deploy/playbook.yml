@@ -38,7 +38,7 @@
       group: ubuntu
       mode: "600"
 
-- name: "Seting up GitLab server"
+- name: "Setting up GitLab server"
   hosts: server
   remote_user: ubuntu
   become: yes
@@ -106,7 +106,7 @@
   - shell:
       cmd: docker run -d --name gitlab-runner --restart always -v /srv/gitlab-runner/config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock  gitlab/gitlab-runner:latest
 
-- name: "Seting up Monitoring server"
+- name: "Setting up Monitoring server"
   hosts: server
   remote_user: ubuntu
   become: yes
