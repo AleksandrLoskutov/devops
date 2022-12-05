@@ -15,7 +15,7 @@
       k8s_config: "{{ k8s_config.stdout }}"
       cacheable: yes
 
-- name: "Applying Kubernetes config"
+- name: "Applay Kubernetes config"
   hosts: worker_node
   remote_user: ubuntu
   become: yes
@@ -38,7 +38,7 @@
       group: ubuntu
       mode: "600"
 
-- name: "Seting up GitLab runner"
+- name: "Seting up GitLab server"
   hosts: server
   remote_user: ubuntu
   become: yes
@@ -89,6 +89,7 @@
   - apt:
       pkg:
       - docker-ce
+      - docker-compose
       - kubectl
 
   - shell:
@@ -104,3 +105,62 @@
 
   - shell:
       cmd: docker run -d --name gitlab-runner --restart always -v /srv/gitlab-runner/config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock  gitlab/gitlab-runner:latest
+
+- name: "Seting up Monitoring server"
+  hosts: server
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  gather_facts: no
+
+  tasks:
+  - file:
+      path: "{{ item }}"
+      state: directory
+      owner: root
+      group: root
+    loop:
+      - '/opt/monitoring'
+      - '/opt/monitoring/alertmanager'
+      - '/opt/monitoring/blackbox'
+      - '/opt/monitoring/prometheus'
+      - '/opt/monitoring/grafana'
+      - '/opt/monitoring/data'
+
+  - file:
+      dest: /opt/monitoring/alertmanager
+      state: directory
+      mode: "0777"
+
+  - file:
+      dest: /opt/monitoring/grafana
+      state: directory
+      mode: "0775"
+
+  - file:
+      dest: /opt/monitoring/data
+      state: directory
+      mode: "0777"
+
+  - copy:
+      src: "monitoring/docker-compose.yml"
+      dest: "/opt/monitoring/docker-compose.yml"
+
+  - copy:
+      src: "monitoring/alertmanager/config.yml"
+      dest: "/opt/monitoring/alertmanager/config.yml"
+
+  - copy:
+      src: "monitoring/blackbox/blackbox.yml"
+      dest: "/opt/monitoring/blackbox/blackbox.yml"
+
+  - copy:
+      src: "monitoring/prometheus/alert.rules"
+      dest: "/opt/monitoring/prometheus/alert.rules"
+
+  - copy:
+      src: "monitoring/prometheus/prometheus.yml"
+      dest: "/opt/monitoring/prometheus/prometheus.yml"
+
+      #  - shell:
+      #cmd: docker-compose -f /opt/monitoring/docker-compose.yml up -d
