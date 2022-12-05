@@ -30,5 +30,9 @@ ___
  - ![garfana_id1860](./images/garfana_id1860.PNG)
  - Grafana dashboard 7587
  - ![grafana_id7587](./images/grafana_id7587.PNG)
+ - Grafana dashboard при падении приложения
+ - ![grafana_app_down](./images/grafana_app_down.PNG)
+ - Telegram bot при падении приложения
+ - ![telegram_app_down](./images/telegram_app_down.PNG)
  
   
