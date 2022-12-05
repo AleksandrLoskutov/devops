@@ -34,5 +34,7 @@ ___
  - ![grafana_app_down](./images/grafana_app_down.PNG)
  - Telegram bot при падении приложения
  - ![telegram_app_down](./images/telegram_app_down.PNG)
- 
-  
+ - Grafana dashboard при восстановлении приложения
+ - ![grafana_app_up](./images/grafana_app_up.PNG)
+ - Telegram bot при восстановлении приложения
+ - ![telegram_app_up](./images/telegram_app_up.PNG)
