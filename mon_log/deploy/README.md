@@ -6,6 +6,9 @@ ___
 ___
 Как развернуть:
 - зайти на сервер (**srv01**) через терминал
+- выполнить команду _kubectl apply -f /opt/monitoring/fluentd/fluentd.yaml_
+- открыть кибану в браузере
+- зайти на сервер (**srv01**) через терминал
 - в файле _/opt/monitoring/docker-compose.yml_ вставить свои значения
   - _TELEGRAM_ADMIN: "0000000"_
   - _TELEGRAM_TOKEN: 0000000:sdhclisdh_
