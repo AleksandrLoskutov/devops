@@ -38,7 +38,7 @@
       group: ubuntu
       mode: "600"
 
-- name: "Setting up GitLab server"
+- name: "Seting up GitLab server"
   hosts: server
   remote_user: ubuntu
   become: yes
@@ -106,7 +106,7 @@
   - shell:
       cmd: docker run -d --name gitlab-runner --restart always -v /srv/gitlab-runner/config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock  gitlab/gitlab-runner:latest
 
-- name: "Setting up Monitoring server"
+- name: "Seting up Monitoring server"
   hosts: server
   remote_user: ubuntu
   become: yes
@@ -121,6 +121,7 @@
       group: root
     loop:
       - '/opt/monitoring'
+      - '/opt/monitoring/fluentd'
       - '/opt/monitoring/alertmanager'
       - '/opt/monitoring/blackbox'
       - '/opt/monitoring/prometheus'
@@ -162,5 +163,8 @@
       src: "monitoring/prometheus/prometheus.yml"
       dest: "/opt/monitoring/prometheus/prometheus.yml"
 
-      #  - shell:
-      #cmd: docker-compose -f /opt/monitoring/docker-compose.yml up -d
+  - copy:
+      src: "monitoring/fluentd/fluentd.yaml"
+      dest: "/opt/monitoring/fluentd/fluentd.yaml"
+      owner: ubuntu
+      group: ubuntu
