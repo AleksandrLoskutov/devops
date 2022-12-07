@@ -6,7 +6,7 @@ ___
 ___
 Как развернуть:
 - зайти на сервер (**srv01**) через терминал
-**1. Логирование**
+- **1. Логирование**
 - установить elasticsearch
   - _echo "deb [trusted=yes] https://mirror.yandex.ru/mirrors/elastic/7/ stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list_
   - _sudo apt install elasticsearch_
@@ -27,7 +27,7 @@ ___
 - в браузере перейти в Кибану по адресу http://<внешний адрес>:5601
   - создать новый index pattern - _logstash-*_
   - перейти в Discover
-**2. Мониторинг и алертинг**
+- **2. Мониторинг и алертинг**
 - в файле _/opt/monitoring/docker-compose.yml_ вставить свои значения
   - _TELEGRAM_ADMIN: "0000000"_
   - _TELEGRAM_TOKEN: 0000000:sdhclisdh_
