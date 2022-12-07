@@ -48,7 +48,9 @@ ___
  **Результат развертывания**
  - Терминал (fluentd)
  - ![fluentd_create](./images/fluentd_create.PNG)
- - Терминал
+ - Kibana Discover
+ - ![kibana_logs](./images/kibana_logs.PNG)
+ - Терминал (monitoring stack)
  - ![prom_srv01](./images/prom_srv01.PNG)
  - Grafana dashboard 1860
  - ![garfana_id1860](./images/garfana_id1860.PNG)
