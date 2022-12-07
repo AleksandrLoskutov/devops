@@ -6,6 +6,15 @@ ___
 ___
 Как развернуть:
 - зайти на сервер (**srv01**) через терминал
+- изменить параметры в файле _/etc/elastisearch/elaticsearch.yml_ на
+  - **network.host: 192.168.200.11**
+  - **discovery.seed_hosts: ["192.168.200.101", "192.168.200.102"]**
+  - добвавить в конец файла **xpack.security.enabled: false**
+ - выполнить _systemctl restart elasticsearch_
+ - изменить параметры в файле _/etc/kibana/kibana.yml_
+   - **server.host: "0.0.0.0"**
+   - **elasticsearch.hosts: ["http://192.168.200.11:9200"]**
+- выполнить _systemctl restart kibana_
 - выполнить команду _kubectl apply -f /opt/monitoring/fluentd/fluentd.yaml_
 - открыть кибану в браузере
 - зайти на сервер (**srv01**) через терминал
